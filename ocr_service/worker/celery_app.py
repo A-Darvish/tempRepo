@@ -18,5 +18,5 @@ celery_app.conf.update(
     task_acks_late=True,
 )
 
-# ✅ IMPORTANT: make Celery discover tasks
+
 celery_app.autodiscover_tasks(["worker"])

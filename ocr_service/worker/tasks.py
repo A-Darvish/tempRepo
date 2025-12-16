@@ -15,29 +15,29 @@ def process_ocr_task(self, task_id: str):
         if not task:
             return {"status": "failed", "error": "Task not found"}
 
-        task.status = "processing"
+        task.status = "processing" # type: ignore
         db.commit()
 
-        result = process_image_fast(task.image_path)
+        result = process_image_fast(task.image_path) # pyright: ignore[reportArgumentType]
 
         if result.get("status") == "success":
-            task.status = "success"
-            task.title = result.get("title")
-            task.code = result.get("code")
-            task.date = result.get("date")
-            task.raw_text = result.get("raw_text")
-            task.raw_lines = result.get("raw_lines")
-            task.meta = {
+            task.status = "success" # type: ignore
+            task.title = result.get("title") # type: ignore
+            task.code = result.get("code") # type: ignore
+            task.date = result.get("date") # type: ignore
+            task.raw_text = result.get("raw_text") # type: ignore
+            task.raw_lines = result.get("raw_lines") # type: ignore
+            task.meta = { # type: ignore
                 "variant_used": result.get("variant_used"),
                 "confidence": result.get("confidence"),
             }
-            task.error = None
+            task.error = None # type: ignore
         else:
-            task.status = "failed"
+            task.status = "failed" # type: ignore
             task.error = result.get("error", "Unable to extract required fields.")
-            task.raw_text = result.get("raw_text")
-            task.raw_lines = result.get("raw_lines")
-            task.meta = {"variant_used": result.get("variant_used")}
+            task.raw_text = result.get("raw_text") # type: ignore
+            task.raw_lines = result.get("raw_lines") # type: ignore
+            task.meta = {"variant_used": result.get("variant_used")} # type: ignore
 
         db.commit()
         return {"status": task.status}
@@ -47,8 +47,8 @@ def process_ocr_task(self, task_id: str):
         # mark failed
         task = db.query(OCRTask).filter(OCRTask.id == task_id).first()
         if task:
-            task.status = "failed"
-            task.error = f"Unhandled error: {repr(e)}"
+            task.status = "failed" # type: ignore
+            task.error = f"Unhandled error: {repr(e)}" # type: ignore
             db.commit()
         raise
     finally:

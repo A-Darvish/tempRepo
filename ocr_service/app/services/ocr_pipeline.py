@@ -1,23 +1,3 @@
-# NOTE: paste your working code here:
-# - OCRLine dataclass
-# - global PADDLE_OCR init
-# - preprocess_variants, deskew, etc.
-# - extract_fields_v2
-# - process_image_fast(image_path) returning dict
-
-# Keep the API as:
-# def process_image_fast(image_path: str) -> dict:
-#     ...
-#     return result_dict
-
-
-
-
-
-
-
-# app/services/ocr_pipeline.py
-
 from __future__ import annotations
 
 import os
